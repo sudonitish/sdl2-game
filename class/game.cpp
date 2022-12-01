@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "texture_manager.hpp"
 SDL_Texture *PlayerTexture;
 SDL_Rect srcRect, destRect;
 Game::Game() {}
@@ -28,14 +29,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
   }
   else
     isRunning = false;
-
-  SDL_Surface *tempSurface = IMG_Load("assets/stick_man.png");
-
-  if (tempSurface == NULL)
-  std::cout << SDL_GetError() << std::endl;
-
-  PlayerTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-  SDL_FreeSurface(tempSurface);
+PlayerTexture=TextureManager::LoadTexture("assets/stick_man.png",renderer);
 }
 void Game::handleEvents()
 {
@@ -74,7 +68,7 @@ void Game::update()
   {
     x--;
   }
-  std::cout<<"Renderer Updated!"<<std::endl;
+  std::cout << "Renderer Updated!" << std::endl;
 }
 void Game::render()
 {
