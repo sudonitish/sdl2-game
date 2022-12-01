@@ -1,10 +1,11 @@
 #include "game.hpp"
 #include "texture_manager.hpp"
-SDL_Texture *PlayerTexture;
-SDL_Rect srcRect, destRect;
+#include "game_object.hpp"
+GameObject *player1;
+GameObject *player2;
 Game::Game() {}
 Game::~Game() {}
-void Game::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen)
+void Game::init(const char *title, int xPos, int yPos, int width, int height, bool fullscreen)
 {
   int flags = 0;
   if (fullscreen)
@@ -14,7 +15,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
   if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
   {
     std::cout << "Subsytem Inititalized..." << std::endl;
-    window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
+    window = SDL_CreateWindow(title, xPos, yPos, width, height, flags);
     if (window)
     {
       std::cout << "Window Created!" << std::endl;
@@ -29,7 +30,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
   }
   else
     isRunning = false;
-PlayerTexture=TextureManager::LoadTexture("assets/stick_man.png",renderer);
+  player1 = new GameObject("assets/player1.png", renderer, 1);
+  player2 = new GameObject("assets/player2.png", renderer, 2);
 }
 void Game::handleEvents()
 {
@@ -47,40 +49,24 @@ void Game::handleEvents()
 void Game::update()
 {
 
-  if (x == 700)
-  {
-    f = 1;
-  }
-  if (x == 0)
-  {
-    f = 0;
-  }
-  destRect.h = 200;
-  destRect.w = 200;
-  destRect.x = x;
-  destRect.y = 400;
-
-  if (f == 0)
-  {
-    x++;
-  }
-  if (f == 1)
-  {
-    x--;
-  }
+  player1->Update(1);
+  player2->Update(2);
   std::cout << "Renderer Updated!" << std::endl;
 }
 void Game::render()
 {
   SDL_RenderClear(renderer);
   // Adding Stuff to renderer
-  SDL_RenderCopy(renderer, PlayerTexture, NULL, &destRect);
+  player1->Render();
+  player2->Render();
   SDL_RenderPresent(renderer);
 }
 void Game::clean()
 {
   SDL_DestroyWindow(window);
+  std::cout << "Window Destroyed." << std::endl;
   SDL_DestroyRenderer(renderer);
+  std::cout << "Renderer Destroyed." << std::endl;
   SDL_Quit();
-  std::cout << "Game Cleaned." << std::endl;
+  std::cout << "Game Exited." << std::endl;
 }

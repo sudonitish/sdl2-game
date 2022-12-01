@@ -3,11 +3,12 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include <iostream>
-class Game{
+class Game
+{
 public:
   Game();
   ~Game();
-  void init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen);
+  void init(const char *title, int xPos, int yPos, int width, int height, bool fullscreen);
   void handleEvents();
   void update();
   void render();
