@@ -11,14 +11,14 @@ public:
   void init(const char *title, int xPos, int yPos, int width, int height, bool fullscreen);
   void handleEvents();
   void update();
+  bool running() { return isRunning; }
   void render();
   void clean();
 
-  bool running() { return isRunning; }
+  static SDL_Renderer *renderer;
 
 private:
   bool isRunning;
   int x = 0, y = 0, f = 0;
   SDL_Window *window;
-  SDL_Renderer *renderer;
 };

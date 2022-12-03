@@ -1,8 +1,13 @@
 #include "game.hpp"
 #include "texture_manager.hpp"
 #include "game_object.hpp"
+#include "map.hpp"
+
 GameObject *player1;
 GameObject *player2;
+Map *map;
+SDL_Renderer *Game::renderer = nullptr;
+
 Game::Game() {}
 Game::~Game() {}
 void Game::init(const char *title, int xPos, int yPos, int width, int height, bool fullscreen)
@@ -30,8 +35,9 @@ void Game::init(const char *title, int xPos, int yPos, int width, int height, bo
   }
   else
     isRunning = false;
-  player1 = new GameObject("assets/player1.png", renderer, 1);
-  player2 = new GameObject("assets/player2.png", renderer, 2);
+  player1 = new GameObject("assets/player1.png", 1);
+  player2 = new GameObject("assets/player2.png", 2);
+  map = new Map();
 }
 void Game::handleEvents()
 {
@@ -51,12 +57,14 @@ void Game::update()
 
   player1->Update(1);
   player2->Update(2);
+
   std::cout << "Renderer Updated!" << std::endl;
 }
 void Game::render()
 {
   SDL_RenderClear(renderer);
   // Adding Stuff to renderer
+  map->DrawMap();
   player1->Render();
   player2->Render();
   SDL_RenderPresent(renderer);
