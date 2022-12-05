@@ -2,12 +2,16 @@
 #include "texture_manager.hpp"
 #include "game_object.hpp"
 #include "map.hpp"
+#include "entity_component_system.hpp"
+#include "components.h"
 
 GameObject *player1;
 GameObject *player2;
 Map *map;
 SDL_Renderer *Game::renderer = nullptr;
 
+Manager manager;
+auto &newPlayer(manager.addEntity());
 Game::Game() {}
 Game::~Game() {}
 void Game::init(const char *title, int xPos, int yPos, int width, int height, bool fullscreen)
@@ -38,6 +42,9 @@ void Game::init(const char *title, int xPos, int yPos, int width, int height, bo
   player1 = new GameObject("assets/player1.png", 1);
   player2 = new GameObject("assets/player2.png", 2);
   map = new Map();
+
+  newPlayer.addComponent<PositionComponent>();
+  newPlayer.getComponenet<PositionComponent>().setPos(500,500);
 }
 void Game::handleEvents()
 {
@@ -57,8 +64,10 @@ void Game::update()
 
   player1->Update(1);
   player2->Update(2);
+  manager.update();
+  std::cout << newPlayer.getComponenet<PositionComponent>().x() << "," << newPlayer.getComponenet<PositionComponent>().y() << std::endl;
 
-  std::cout << "Renderer Updated!" << std::endl;
+  // std::cout << "Renderer Updated!" << std::endl;
 }
 void Game::render()
 {
