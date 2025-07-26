@@ -3,6 +3,11 @@
 This is a simple 2D game project using SDL2.
 
 ## Project Structure
+# SDL2 Game
+
+This is a simple 2D game project using SDL2.
+
+## Project Structure
 
 - `main.cpp` — Entry point of the game
 - `assets/` — Game assets (sprites, textures)
@@ -36,4 +41,13 @@ All game textures are located in the `assets/` folder.
 
 ## License
 
-This project is provided for educational purposes only.
+This project is licensed under the Educational Community License, Version 2.0 (ECL-2.0). See the [LICENSE](./LICENSE) file for details.
+
+
+**In short:**
+- Free for educational, non-commercial use
+- Keep copyright/license
+- No use of the project name without permission
+- No warranty; use at your own risk
+
+**Note:** The project name may be updated in the future. Please refer to this README for the latest project name and information.
